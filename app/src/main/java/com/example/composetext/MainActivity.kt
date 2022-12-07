@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -26,9 +28,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTextTheme {
-                newAge(age = 30, name = "matr1x")
+//                newAge(age = 30, name = "matr1x")
                 ColumnSample() //список похожий на recylerview
+                listStart() //список
             }
+        }
+    }
+}
+
+@Composable
+fun listStart(){
+    val colorNamesList = listOf("Red", "Green", "Blue", "Indigo")
+
+    LazyColumn{
+        itemsIndexed(colorNamesList) { index, item ->
+            Text(text = "color + $colorNamesList",
+                color = Color.Yellow,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .background(Color.Black)
+                    .wrapContentHeight(Alignment.CenterVertically)
+            )
         }
     }
 }
@@ -44,12 +65,11 @@ fun ColumnSample() {
             .verticalScroll(scroll)
             .padding(PaddingValues(top = 150.dp))
             .fillMaxSize()
-            .background(Color.White),
+            .background(Color.Transparent),
     ) {
         repeat(25) { position ->
 
             println("Build item at position print $position")
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth(fraction = 0.9f)
